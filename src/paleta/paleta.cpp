@@ -47,7 +47,7 @@ int Paleta::obterTamanho() const {
 };
 
 int Paleta::obterQuantidade() const {
-    return 0;
+    return quantidade;
 };
 
 void Paleta::adicionarCor(const Cor& cor) {
