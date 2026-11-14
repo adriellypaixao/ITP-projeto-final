@@ -12,9 +12,9 @@ DÚVIDAS:
 using namespace std;
 // implemente aqui os métodos da classe Paleta, conforme especificado no arquivo de cabeçalho paleta.h
 
-Paleta::Paleta(int tamanho) : cores(new Cor[tamanho]), tamanho(tamanho) {};
+Paleta::Paleta(int tamanho) : cores(new Cor[tamanho]), tamanho(tamanho), quantidade(0) {};
 
-Paleta::Paleta(const string& nomeArquivo) {
+Paleta::Paleta(const string& nomeArquivo) : cores(nullptr), tamanho(0), quantidade(0) {
     vector<Cor> paleta_temp; // usada para descobrir o tamanhho;
     fstream arquivo(nomeArquivo);
 
