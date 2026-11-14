@@ -2,6 +2,7 @@
 DÚVIDAS:
 - será que pode usar vector? no .h, pede "Representa uma paleta de cores, que é um conjunto de cores armazenadas em um array alocado
  * dinamicamente"?
+- pode mudar o .h?
 */
 
 #include "paleta.h"
@@ -42,7 +43,7 @@ Paleta::Paleta(const string& nomeArquivo) {
 };
 
 int Paleta::obterTamanho() const {
-    return 0;
+    return tamanho;
 };
 
 int Paleta::obterQuantidade() const {
