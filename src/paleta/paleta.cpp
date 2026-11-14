@@ -11,9 +11,7 @@ DÚVIDAS:
 using namespace std;
 // implemente aqui os métodos da classe Paleta, conforme especificado no arquivo de cabeçalho paleta.h
 
-Paleta::Paleta(int tamanho) {
-    Cor *cores = new Cor[tamanho];
-};
+Paleta::Paleta(int tamanho) : cores(new Cor[tamanho]), tamanho(tamanho) {};
 
 Paleta::Paleta(const string& nomeArquivo) {
     vector<Cor> paleta_temp; // usada para descobrir o tamanhho;
@@ -41,4 +39,21 @@ Paleta::Paleta(const string& nomeArquivo) {
     for (int i = 0; i< tamanho; i++) {
         cores[i] = paleta_temp[i];
     }   
+};
+
+int Paleta::obterTamanho() const {
+    return 0;
+};
+
+int Paleta::obterQuantidade() const {
+    return 0;
+};
+
+void Paleta::adicionarCor(const Cor& cor) {
+
+};
+
+Cor Paleta::obterCor(int indice) {
+    Cor cor;
+    return cor;
 };
