@@ -12,6 +12,13 @@ DÚVIDAS:
 using namespace std;
 // implemente aqui os métodos da classe Paleta, conforme especificado no arquivo de cabeçalho paleta.h
 
+Cor converterHexaParaCor(const string& cor_str) {
+    int r = stoi(cor_str.substr(1, 2), 0, 16);
+    int g = stoi(cor_str.substr(3, 2), 0, 16);
+    int b = stoi(cor_str.substr(5, 2), 0, 16);
+    return Cor{r, g, b};
+}
+
 Paleta::Paleta(int tamanho) : cores(new Cor[tamanho]), tamanho(tamanho), quantidade(0) {};
 
 Paleta::Paleta(const string& nomeArquivo){
@@ -23,11 +30,8 @@ Paleta::Paleta(const string& nomeArquivo){
         // separa # r g b
 
         // converter de hexa para int
-        int r = stoi(cor_str.substr(1, 2), 0, 16);
-        int g = stoi(cor_str.substr(3, 2), 0, 16);
-        int b = stoi(cor_str.substr(5, 2), 0, 16);
 
-        Cor cor = {r, g, b};
+        Cor cor = converterHexaParaCor(cor_str);
 
         paleta_temp.push_back(cor);
     }
