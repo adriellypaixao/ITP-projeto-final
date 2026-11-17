@@ -33,16 +33,15 @@ Paleta::Paleta(const string& nomeArquivo){
     }
     arquivo.close();
 
-    //inicializa o array dinâmico com valores do vector
-    int tamanho = paleta_temp.size();
-    this->cores = new Cor[tamanho];
+    int tam = paleta_temp.size();
+    this->cores = new Cor[tam];
 
-    for (int i = 0; i< tamanho; i++) {
+    for (int i = 0; i< tam; i++) {
         cores[i] = paleta_temp[i];
     }   
 
-    this->tamanho=tamanho;
-    this->quantidade=tamanho;
+    this->tamanho=tam;
+    this->quantidade=tam;
 };
 
 Paleta::~Paleta() {
