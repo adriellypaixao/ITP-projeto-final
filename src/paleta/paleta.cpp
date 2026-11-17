@@ -14,7 +14,7 @@ using namespace std;
 
 Paleta::Paleta(int tamanho) : cores(new Cor[tamanho]), tamanho(tamanho), quantidade(0) {};
 
-Paleta::Paleta(const string& nomeArquivo) : cores(nullptr), tamanho(0), quantidade(0) {
+Paleta::Paleta(const string& nomeArquivo){
     vector<Cor> paleta_temp; // usada para descobrir o tamanhho;
     fstream arquivo(nomeArquivo);
 
@@ -24,8 +24,8 @@ Paleta::Paleta(const string& nomeArquivo) : cores(nullptr), tamanho(0), quantida
 
         // converter de hexa para int
         int r = stoi(cor_str.substr(1, 2), 0, 16);
-        int g = stoi(cor_str.substr(1, 2), 0, 16);
-        int b = stoi(cor_str.substr(1, 2), 0, 16);
+        int g = stoi(cor_str.substr(3, 2), 0, 16);
+        int b = stoi(cor_str.substr(5, 2), 0, 16);
 
         Cor cor = {r, g, b};
 
@@ -35,12 +35,19 @@ Paleta::Paleta(const string& nomeArquivo) : cores(nullptr), tamanho(0), quantida
 
     //inicializa o array dinâmico com valores do vector
     int tamanho = paleta_temp.size();
-    Cor *cores = new Cor[tamanho];
+    this->cores = new Cor[tamanho];
 
     for (int i = 0; i< tamanho; i++) {
         cores[i] = paleta_temp[i];
     }   
+
+    this->tamanho=tamanho;
+    this->quantidade=tamanho;
 };
+
+Paleta::~Paleta() {
+    delete[] cores;
+}
 
 int Paleta::obterTamanho() const {
     return tamanho;
@@ -51,10 +58,15 @@ int Paleta::obterQuantidade() const {
 };
 
 void Paleta::adicionarCor(const Cor& cor) {
-
+    if (quantidade < tamanho) {
+        cores[quantidade] = cor;
+        quantidade++;
+    }
 };
 
 Cor Paleta::obterCor(int indice) {
-    Cor cor;
-    return cor;
+    if (indice < 0 || indice >= quantidade) {
+        return Cor{0, 0, 0};
+    }
+    return cores[indice];
 };

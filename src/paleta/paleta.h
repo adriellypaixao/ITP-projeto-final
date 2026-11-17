@@ -64,6 +64,7 @@ public:
    * maior ou igual à quantidade de cores), retorna uma cor padrão (preto).
    */
   Cor obterCor(int indice);
-
+  
+  ~Paleta();
 };
 
