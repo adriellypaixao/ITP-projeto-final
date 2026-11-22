@@ -9,9 +9,9 @@
  * Representa uma cor no formato RGB, com três componentes: vermelho (R), verde (G) e azul (B).
  */
 struct Cor {
-  int r;
-  int g;
-  int b;
+  int r = 0;
+  int g = 0;
+  int b = 0;
 };
 
 /**

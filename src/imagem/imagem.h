@@ -9,16 +9,16 @@ using Pixel = Cor; // Pixel agora é outro nome para Cor, representando a cor de
 
 class Imagem {
     private:
-    int largura;
-    int altura;
-    Pixel** pixels;
+        int largura;
+        int altura;
+        Pixel** pixels;
     public:
-    Imagem(int largura, int altura);
-    ~Imagem();
-    Pixel obterPixel(int x, int y);
-    void definirPixel(int x, int y, Pixel pixel);
-    bool ler(const std::string nomeArquivo);
-    bool salvar(const std::string nomeArquivo);
+        Imagem(int largura, int altura);
+        ~Imagem();
+        Pixel obterPixel(int x, int y);
+        void definirPixel(int x, int y, Pixel pixel);
+        bool ler(const std::string nomeArquivo);
+        bool salvar(const std::string nomeArquivo);
 };
 
 // Lembre-se de:

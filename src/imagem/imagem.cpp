@@ -3,10 +3,11 @@
 Imagem::Imagem(int largura, int altura){
     this->largura = largura;
     this->altura = altura;
-    this->pixels = new Pixel*[altura];
+    this->pixels = new Pixel*[altura]; 
     for (int i = 0; i < altura; i++) {
         this->pixels[i] = new Pixel[largura];
-    }
+    } // inicializar a matriz com zeros, mudou-se o valor padrão para os r, g, b 
+    //no struct Cor para zero.
 }
 
 Imagem::~Imagem() {
