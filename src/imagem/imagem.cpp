@@ -1,6 +1,12 @@
 #include "imagem.h"
 
-Imagem::Imagem(int largura, int altura){
+Imagem::Imagem() {
+    this->largura = 0;
+    this->altura = 0;
+    this->pixels = nullptr;
+}
+
+Imagem::Imagem(int largura, int altura){ 
     this->largura = largura;
     this->altura = altura;
     this->pixels = new Pixel*[altura]; 
@@ -26,6 +32,9 @@ int Imagem::obterAltura() {
 }
 
 Pixel Imagem::obterPixel(int x, int y){
+    if (x < 0 || x >= largura || y < 0 || y >= altura) {
+        return {0, 0, 0};
+    }
     return pixels[x][y];
 }
 

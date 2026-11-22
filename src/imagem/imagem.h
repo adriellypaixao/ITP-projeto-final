@@ -13,6 +13,7 @@ class Imagem {
         int altura;
         Pixel** pixels;
     public:
+        Imagem();
         Imagem(int largura, int altura);
         ~Imagem();
         Pixel obterPixel(int x, int y);
