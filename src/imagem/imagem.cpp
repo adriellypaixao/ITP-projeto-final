@@ -83,19 +83,30 @@ bool Imagem::lerPPM(const std::string nomeArquivo) {
         liberar();
         alocar(novaLargura, novaAltura);
     }
-    
 
+    for (int i = 0; i<altura; i++) {
+        std::string linha;
+        std::getline(arquivo, linha);
+        std::istringstream iss(linha);
+        int r, g, b;
 
-    // ler pixels
+        for (int j = 0; j < largura; j++) {
+            iss >> r >> g >> b;
 
+            pixels[i][j] = {r, g, b};
+        }
+    }
 
     arquivo.close();
+
+    return true;
 }
 
 /*
 um método para salvar a imagem no formato PPM (P3), dado o nome do arquivo.
 */
 bool Imagem::salvarPPM(const std::string nomeArquivo) {
+    
     // FALTA IMPLEMENTAR
     return false;
 }
