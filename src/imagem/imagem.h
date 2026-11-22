@@ -12,6 +12,9 @@ class Imagem {
         int largura;
         int altura;
         Pixel** pixels;
+        void liberar();
+        void alocar(int largura, int altura);
+
     public:
         Imagem();
         Imagem(int largura, int altura);
