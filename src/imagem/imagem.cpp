@@ -1,6 +1,5 @@
 #include "imagem.h"
 #include <fstream>
-#include <sstream>
 
 void Imagem::liberar() {
     for (int i = 0; i < altura; i++) {
@@ -66,32 +65,29 @@ bool Imagem::lerPPM(const std::string nomeArquivo) {
     }
 
     // add função: ler cabeçários do arquivo
-    std::string identificador, larg_alt_str, valor_max_str;
+    std::string identificador;
+    int novaLargura, novaAltura, valor_max;
 
-    std::getline(arquivo, identificador);
-    std::getline(arquivo, larg_alt_str);
-    std::getline(arquivo, valor_max_str);
+    arquivo >> identificador >> novaLargura >> novaAltura >> valor_max;
 
-    int valor_max = std::stoi(valor_max_str);
-
-    int novaLargura, novaAltura;
-
-    std::istringstream iss(larg_alt_str);
-    iss >> novaLargura >> novaAltura; // precisa ser dessa forma, não da certo com stoi, pois pode ser um char
+    //arquivo.fail(): retorna true se algum operação de leitura da linha anterior falhou.
+    if (arquivo.fail() || identificador != "P3" || novaLargura <= 0 || novaAltura <= 0) {
+        return false;
+    }
 
     if (novaLargura != largura || novaAltura != altura) {
         liberar();
         alocar(novaLargura, novaAltura);
     }
 
-    for (int i = 0; i<altura; i++) {
-        std::string linha;
-        std::getline(arquivo, linha);
-        std::istringstream iss(linha);
-        int r, g, b;
-
+    for (int i = 0; i<altura; i++) { 
         for (int j = 0; j < largura; j++) {
-            iss >> r >> g >> b;
+            int r, g, b;
+            arquivo >> r >> g >> b;
+
+            if (arquivo.fail()) { // adicionar verificador  de r, g, b menor que valor_max?
+                return false;
+            }
 
             pixels[i][j] = {r, g, b};
         }
@@ -107,6 +103,9 @@ um método para salvar a imagem no formato PPM (P3), dado o nome do arquivo.
 */
 bool Imagem::salvarPPM(const std::string nomeArquivo) {
     
-    // FALTA IMPLEMENTAR
+    std::fstream arquivo(nomeArquivo);
+
+
+
     return false;
 }
