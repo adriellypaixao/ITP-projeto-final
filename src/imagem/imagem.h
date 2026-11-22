@@ -16,9 +16,11 @@ class Imagem {
         Imagem(int largura, int altura);
         ~Imagem();
         Pixel obterPixel(int x, int y);
-        void definirPixel(int x, int y, Pixel pixel);
-        bool ler(const std::string nomeArquivo);
-        bool salvar(const std::string nomeArquivo);
+        int obterLargura();
+        int obterAltura();
+        void definePixel(int x, int y, Pixel pixel);
+        bool lerPPM(const std::string nomeArquivo);
+        bool salvarPPM(const std::string nomeArquivo);
 };
 
 // Lembre-se de:

@@ -17,20 +17,28 @@ Imagem::~Imagem() {
     delete[] pixels;
 }
 
+int Imagem::obterLargura() {
+    return largura;
+}
+
+int Imagem::obterAltura() {
+    return altura;
+}
+
 Pixel Imagem::obterPixel(int x, int y){
     return pixels[x][y];
 }
 
-void Imagem::definirPixel(int x, int y, Pixel pixel) {
+void Imagem::definePixel(int x, int y, Pixel pixel) {
     pixels[x][y] = pixel;
 }
 
-bool Imagem::ler(const std::string nomeArquivo) {
+bool Imagem::lerPPM(const std::string nomeArquivo) {
     // FALTA IMPLEMENTAR
     return false;
 }
 
-bool Imagem::salvar(const std::string nomeArquivo) {
+bool Imagem::salvarPPM(const std::string nomeArquivo) {
     // FALTA IMPLEMENTAR
     return false;
 }
