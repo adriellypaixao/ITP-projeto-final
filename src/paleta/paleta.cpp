@@ -9,28 +9,24 @@ DÚVIDAS:
 #include <string>
 #include <fstream> // depois ver se é melhor fstream (escrita e leitura) ou ifstream(só leitura)
 #include <vector>
-using namespace std;
 // implemente aqui os métodos da classe Paleta, conforme especificado no arquivo de cabeçalho paleta.h
 
-Cor converterHexaParaCor(const string& cor_str) {
-    int r = stoi(cor_str.substr(1, 2), 0, 16);
-    int g = stoi(cor_str.substr(3, 2), 0, 16);
-    int b = stoi(cor_str.substr(5, 2), 0, 16);
+Cor converterHexaParaCor(const std::string& cor_str) {
+    int r = std::stoi(cor_str.substr(1, 2), 0, 16);
+    int g = std::stoi(cor_str.substr(3, 2), 0, 16);
+    int b = std::stoi(cor_str.substr(5, 2), 0, 16);
     return Cor{r, g, b};
 }
 
 Paleta::Paleta(int tamanho) : cores(new Cor[tamanho]), tamanho(tamanho), quantidade(0) {};
 
-Paleta::Paleta(const string& nomeArquivo){
-    vector<Cor> paleta_temp; // usada para descobrir o tamanhho;
-    fstream arquivo(nomeArquivo);
+Paleta::Paleta(const std::string& nomeArquivo){
+    std::vector<Cor> paleta_temp; // usada para descobrir o tamanhho;
+    std::ifstream arquivo(nomeArquivo);
 
-    string cor_str;
+    std::string cor_str;
     while (getline(arquivo, cor_str)) {
-        // separa # r g b
-
         // converter de hexa para int
-
         Cor cor = converterHexaParaCor(cor_str);
 
         paleta_temp.push_back(cor);
