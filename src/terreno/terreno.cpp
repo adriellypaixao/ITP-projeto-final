@@ -1,6 +1,7 @@
 #include "terreno.h"
 #include <fstream>
 #include <cmath>
+# include <cstdlib>
 
 void Terreno::alocar(int n){
     this->linhas = (pow(2, n) + 1);
@@ -19,7 +20,13 @@ void Terreno::liberar(){
 }
 
 bool Terreno::randomizarCantos() {
-    //IMPLEMENTAR ALEATORIZAR CANTOS
+    if(matriz == nullptr || linhas < 2 || colunas < 2) {
+        return false; // Verifica se possui pelo menos 2 linhas e 2 colunas
+    }
+    matriz[0][0] = (std::rand() % 101); // Gera um número aleatório entre 0 e 100
+    matriz[0][colunas-1] = (std::rand() % 101);
+    matriz[linhas-1][0] = (std::rand() % 101);
+    matriz[linhas-1][colunas-1] = (std::rand() % 101);
     return true;
 }
 
@@ -28,12 +35,12 @@ bool Terreno::diamondSquare() {
     return true;
 }
 
-bool Terreno::diamond() {
+bool Terreno::diamond(int distancia) {
     //IMPLEMENTAR DIAMOND
     return true;
 }
 
-bool Terreno::square() {
+bool Terreno::square(int distancia) {
     //IMPLEMENTAR SQUARE
     return true;
 }
@@ -46,7 +53,7 @@ Terreno::Terreno() {
 }
 
 Terreno::Terreno(int n) {
-    alocar(n);
+    alocar(n); // 2 ^ n + 1
 }
 
 Terreno::~Terreno() {
@@ -54,7 +61,8 @@ Terreno::~Terreno() {
 }
 
 bool Terreno::gerarTerreno(int n, float rugosidade) {
-    //IMPLEMENTAR DIAMOND SQUARE
+    alocar(n);
+    randomizarCantos();
     return true;
 }
 

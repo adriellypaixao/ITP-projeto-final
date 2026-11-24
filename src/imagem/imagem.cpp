@@ -2,10 +2,12 @@
 #include <fstream>
 
 void Imagem::liberar() {
-    for (int i = 0; i < altura; i++) {
-        delete[] pixels[i];
+    if(pixels != nullptr) {
+        for (int i = 0; i < altura; i++) {
+            delete[] pixels[i];
+        }
+        delete[] pixels;        
     }
-    delete[] pixels;
 }
 
 void Imagem::alocar(int largura, int altura) {
@@ -41,15 +43,15 @@ int Imagem::obterAltura() {
     return altura;
 }
 
-Pixel Imagem::obterPixel(int x, int y){
-    if (x < 0 || x >= largura || y < 0 || y >= altura) {
+Pixel Imagem::obterPixel(int linha, int coluna){
+    if (linha < 0 || linha >= largura || coluna < 0 || coluna >= altura) {
         return {0, 0, 0};
     }
-    return pixels[y][x]; //x = coluna, y = linha
+    return pixels[linha][coluna];
 }
 
-void Imagem::definePixel(int x, int y, Pixel pixel) {
-    pixels[y][x] = pixel; //x = coluna, y = linha
+void Imagem::definePixel(int linha, int coluna, Pixel pixel) {
+    pixels[linha][coluna] = pixel;
 }
 
 /*
