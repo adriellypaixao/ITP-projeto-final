@@ -47,6 +47,12 @@ Terreno::Terreno() {
 
 Terreno::Terreno(int n) {
     alocar(n);
+    // inicializar a matriz
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            matriz[i][j] = -1;
+        }
+    }
 }
 
 Terreno::~Terreno() {
