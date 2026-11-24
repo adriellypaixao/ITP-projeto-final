@@ -2,6 +2,22 @@
 #include <fstream>
 #include <cmath>
 
+void Terreno::alocar(int n){
+    this->linhas = (pow(2, n) + 1);
+    this->colunas = (pow(2, n) + 1);
+    this->matriz = new int*[linhas];
+    for (int i = 0; i < linhas; i++) {
+        matriz[i] = new int[colunas];
+    }
+}
+
+void Terreno::liberar(){
+    for (int i = 0; i < linhas; i++) {
+        delete[] matriz[i];
+    }
+    delete[] matriz;
+}
+
 bool Terreno::randomizarCantos() {
     //IMPLEMENTAR ALEATORIZAR CANTOS
     return true;
@@ -30,19 +46,11 @@ Terreno::Terreno() {
 }
 
 Terreno::Terreno(int n) {
-    this->linhas = (pow(2, n) + 1);
-    this->colunas = (pow(2, n) + 1);
-    this->matriz = new int*[linhas];
-    for (int i = 0; i < linhas; i++) {
-        matriz[i] = new int[colunas];
-    }
+    alocar(n);
 }
 
 Terreno::~Terreno() {
-    for (int i = 0; i < linhas; i++) {
-        delete[] matriz[i];
-    }
-    delete[] matriz;
+    liberar();
 }
 
 bool Terreno::gerarTerreno(int n, float rugosidade) {
@@ -54,11 +62,11 @@ int Terreno::obterAltitude(int linha, int coluna) const {
     return matriz[linha][coluna];
 }
 
-int Terreno::obterLargura() const {
+int Terreno::obterQtdColunas() const {
     return colunas;
 }
 
-int Terreno::obterProfundidade() const {
+int Terreno::obterQtdLinhas() const {
     return linhas;
 }
 
