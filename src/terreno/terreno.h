@@ -11,8 +11,8 @@ class Terreno {
     bool randomizarCantos();
     bool diamondSquare();
     bool temPontoCentral();
-    bool diamond();
-    bool square();
+    bool diamond(int distancia);
+    bool square(int distancia);
 
     public:
         Terreno();

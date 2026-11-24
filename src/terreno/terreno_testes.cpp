@@ -5,14 +5,21 @@
 
 TEST_CASE("Testa a criação de um terreno de uma única célula") {
   Terreno terreno(0); // 2^0 + 1 = 1
-  CHECK(terreno.obterLargura() == 1);
-  CHECK(terreno.obterProfundidade() == 1);
+  CHECK(terreno.obterQtdLinhas() == 2);
+  CHECK(terreno.obterQtdColunas() == 2);
 }
 
 TEST_CASE("Testa a geração aleatória de altitudes") {
   Terreno terreno(2);
-  CHECK(terreno.obterLargura() == 5);
-  CHECK(terreno.obterProfundidade() == 5);
+  CHECK(terreno.obterQtdLinhas() == 5);
+  CHECK(terreno.obterQtdColunas() == 5);
+}
+
+TEST_CASE("Testa a Função de randomizar os cantos do terreno") {
+  Terreno terreno(2);
+
+  CHECK(terreno.gerarTerreno(2, 0.5) == true);
+  CHECK(terreno.obterAltitude(0, 0) == 31);
 }
 
 // Você precisará criar testes adicionais para cobrir os métodos privados da classe.
