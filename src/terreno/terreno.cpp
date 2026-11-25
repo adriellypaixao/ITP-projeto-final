@@ -74,6 +74,8 @@ int Terreno::retornaMediaSquare(int i, int j, int distancia) {
 }
 
 void Terreno::square(int distancia) {
+    distancia /= 2;
+
     if (distancia < 1) return;
     
     bool comecaDeslocado = true;
@@ -138,4 +140,28 @@ int Terreno::obterQtdLinhas() const {
     return linhas;
 }
 
+bool Terreno::salvarTerreno(const std::string& nomeArquivo) const {
+    std::ofstream arquivo(nomeArquivo);
+
+    if (!arquivo) {
+        return false; // não conseguiu abrir o arquivo
+    }
+    //dimensoes da matriz
+    arquivo << linhas << " " << colunas << "\n";
+
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            arquivo << matriz[i][j] << " ";
+        }
+        arquivo << "\n";
+    }
+    arquivo.close();
+
+    return true;
+}
+
+bool Terreno::lerTerreno(const std::string& nomeArquivo) {
+    // IMPLEMENTAR
+    return false;
+}
 

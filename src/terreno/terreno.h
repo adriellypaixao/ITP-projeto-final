@@ -2,7 +2,7 @@
 #include <string>
 
 class Terreno {
-    private:
+    public:
         int** matriz;
         int linhas;
         int colunas;
@@ -24,6 +24,6 @@ class Terreno {
         int obterAltitude(int linha, int coluna) const;
         int obterQtdColunas() const;
         int obterQtdLinhas() const; 
-        int salvarTerreno(const std::string nomeArquivo) const;
-        int lerTerreno(const std::string nomeArquivo);
+        bool salvarTerreno(const std::string& nomeArquivo) const;
+        bool lerTerreno(const std::string& nomeArquivo); //falta
 };
