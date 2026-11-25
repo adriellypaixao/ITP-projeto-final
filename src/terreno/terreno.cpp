@@ -41,7 +41,31 @@ bool Terreno::diamond(int distancia) {
 }
 
 bool Terreno::square(int distancia) {
-    //IMPLEMENTAR SQUARE
+    if (distancia < 1) return false;
+
+    for (int i = 0; i < linhas; i += distancia) {
+        for (int j = 0; j < colunas; j += distancia) {
+
+            if (matriz[i][j] != -1) { // significa que aquela célula já foi definida
+                continue;
+            }
+
+            int p1 = ((i - distancia) >= 0) ? matriz[i-distancia][j] : 0; // ponto de cima 
+            int p2 = ((j - distancia) >= 0) ? matriz[i][j - distancia] : 0; // ponto da esquerda
+            int p3 = ((j + distancia) < colunas) ? matriz[i][j + distancia] : 0; // ponto da direita
+            int p4 = ((i + distancia) < linhas) ? matriz[i+distancia][j] : 0; // ponto de baixo 
+
+            int qtd_pontos = 4;
+
+            // definir a média:
+            if (i == 0 || i == (linhas - 1) || j == 0 || j == (colunas - 1) ) { //bordas, só vai ter 3 pontos pŕoximos
+                qtd_pontos -= 1; 
+            }
+
+            int media = (p1 + p2 + p3 + p4) / qtd_pontos;
+            matriz[i][j] = media;
+        }
+    }
     return true;
 }
 
@@ -54,7 +78,7 @@ Terreno::Terreno() {
 
 Terreno::Terreno(int n) {
     alocar(n); // 2 ^ n + 1
-    
+
     // inicializar a matriz
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
