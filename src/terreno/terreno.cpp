@@ -1,7 +1,7 @@
 #include "terreno.h"
 #include <fstream>
 #include <cmath>
-# include <cstdlib>
+#include <cstdlib>
 
 void Terreno::alocar(int n){
     this->linhas = (pow(2, n) + 1);
@@ -73,8 +73,9 @@ bool Terreno::square(int distancia) {
                 matriz[i][j] = retornaMediaSquare(i, j, distancia);
             }
         }
-        comecaDeslocado = (comecaDeslocado = true) ? false : true; // inverter valores: se tá true, troca pra false e vice-versa
+        comecaDeslocado = (comecaDeslocado == true) ? false : true; // inverter valores: se tá true, troca pra false e vice-versa
     }
+    
     return true;
 }
 
