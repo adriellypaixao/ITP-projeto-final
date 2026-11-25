@@ -35,8 +35,32 @@ bool Terreno::diamondSquare() {
     return true;
 }
 
+int Terreno::retornaMediaDiamond(int i, int j, int distancia) {
+    distancia/=2;
+    if(i-distancia<0 || i+distancia>=linhas || j-distancia<0 || j+distancia>=colunas) {
+        return -1; // Retorna 0 se algum ponto estiver fora dos limites da matriz
+    }
+    
+    int p1 = matriz[i-distancia][j-distancia];
+    int p2 = matriz[i+distancia][j - distancia];
+    int p3 = matriz[i-distancia][j + distancia];
+    int p4 = matriz[i+distancia][j+distancia];
+    
+    int media = (p1 + p2 + p3 + p4) / 4;
+    
+    return media;
+}
+
 bool Terreno::diamond(int distancia) {
-    //IMPLEMENTAR DIAMOND
+    int linha_atual = distancia/2;
+    int coluna_atual = distancia/2;
+
+    for (int i = linha_atual; i < linhas; i += distancia) {
+        for (int j = coluna_atual; j < colunas; j += distancia) {
+            matriz[i][j] = retornaMediaDiamond(i, j, distancia);
+        }
+    }
+    
     return true;
 }
  

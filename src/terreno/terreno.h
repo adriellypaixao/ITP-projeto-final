@@ -12,6 +12,7 @@ class Terreno {
         bool randomizarCantos();
         bool diamondSquare();
         bool temPontoCentral();
+        int retornaMediaDiamond(int i, int j, int distancia);
         bool diamond(int distancia);
         int retornaMediaSquare(int i, int j, int distancia);
         bool square(int distancia);
