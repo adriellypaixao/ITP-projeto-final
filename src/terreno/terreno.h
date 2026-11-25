@@ -2,20 +2,19 @@
 #include <string>
 
 class Terreno {
-    public:
+    private:
         int** matriz;
         int linhas;
         int colunas;
 
         void alocar(int n);
         void liberar();
-        bool randomizarCantos();
-        bool diamondSquare();
-        bool temPontoCentral();
+        void randomizarCantos();
+        void diamondSquare(int distancia);
         int retornaMediaDiamond(int i, int j, int distancia);
-        bool diamond(int distancia);
+        void diamond(int distancia);
         int retornaMediaSquare(int i, int j, int distancia);
-        bool square(int distancia);
+        void square(int distancia);
 
     public:
         Terreno();

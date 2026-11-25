@@ -19,27 +19,20 @@ void Terreno::liberar(){
     delete[] matriz;
 }
 
-bool Terreno::randomizarCantos() {
-    if(matriz == nullptr || linhas < 2 || colunas < 2) {
-        return false; // Verifica se possui pelo menos 2 linhas e 2 colunas
-    }
+void Terreno::randomizarCantos() {
     matriz[0][0] = (std::rand() % 101); // Gera um número aleatório entre 0 e 100
     matriz[0][colunas-1] = (std::rand() % 101);
     matriz[linhas-1][0] = (std::rand() % 101);
     matriz[linhas-1][colunas-1] = (std::rand() % 101);
-    return true;
 }
 
-bool Terreno::diamondSquare() {
-    //IMPLEMENTAR DIAMOND SQUARE
-    return true;
+void Terreno::diamondSquare(int distancia) {
+    diamond(distancia);
+    square(distancia);
 }
 
 int Terreno::retornaMediaDiamond(int i, int j, int distancia) {
     distancia/=2;
-    if(i-distancia<0 || i+distancia>=linhas || j-distancia<0 || j+distancia>=colunas) {
-        return -1; // Retorna 0 se algum ponto estiver fora dos limites da matriz
-    }
     
     int p1 = matriz[i-distancia][j-distancia];
     int p2 = matriz[i+distancia][j - distancia];
@@ -51,7 +44,7 @@ int Terreno::retornaMediaDiamond(int i, int j, int distancia) {
     return media;
 }
 
-bool Terreno::diamond(int distancia) {
+void Terreno::diamond(int distancia) {
     int linha_atual = distancia/2;
     int coluna_atual = distancia/2;
 
@@ -60,8 +53,6 @@ bool Terreno::diamond(int distancia) {
             matriz[i][j] = retornaMediaDiamond(i, j, distancia);
         }
     }
-    
-    return true;
 }
  
 int Terreno::retornaMediaSquare(int i, int j, int distancia) {
@@ -82,9 +73,9 @@ int Terreno::retornaMediaSquare(int i, int j, int distancia) {
     return media;
 }
 
-bool Terreno::square(int distancia) {
-    if (distancia < 1) return false;
-
+void Terreno::square(int distancia) {
+    if (distancia < 1) return;
+    
     bool comecaDeslocado = true;
     for (int i = 0; i < linhas; i += distancia) {
         if (comecaDeslocado) {
@@ -99,8 +90,6 @@ bool Terreno::square(int distancia) {
         }
         comecaDeslocado = (comecaDeslocado == true) ? false : true; // inverter valores: se tá true, troca pra false e vice-versa
     }
-    
-    return true;
 }
 
 
@@ -126,8 +115,14 @@ Terreno::~Terreno() {
 }
 
 bool Terreno::gerarTerreno(int n, float rugosidade) {
+    if (n < 0 || rugosidade < 0.0) {
+        return false;
+    }
     alocar(n);
     randomizarCantos();
+    for (int distancia = pow(2, n); distancia >= 1; distancia /= 2) {
+        diamondSquare(distancia);
+    }
     return true;
 }
 
