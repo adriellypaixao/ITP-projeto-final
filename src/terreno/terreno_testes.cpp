@@ -34,7 +34,7 @@ TEST_CASE("Testa salvar matriz 5x5 em arquivo") {
   Terreno terreno(2);
   CHECK(terreno.gerarTerreno(2, 0.5) == true);
 
-  CHECK(terreno.salvarTerreno("terreno.txt"));
+  CHECK(terreno.salvarTerreno("terreno.txt") == true);
 
   std::ifstream arquivo("terreno.txt");
 
@@ -52,17 +52,36 @@ TEST_CASE("Testa salvar matriz 5x5 em arquivo") {
 TEST_CASE("Testa ler terreno 3x3 em arquivo") {
   //IMPLEMENTAR
   Terreno terreno(1);
-  CHECK(terreno.lerTerreno("terreno_3_por_3.txt"));
+  CHECK(terreno.lerTerreno("terreno_3_por_3.txt") == true);
 
-  std::ifstream arquivo("terreno.txt");
+  std::ifstream arquivo("terreno_3_por_3.txt");
 
   int linhas, colunas, altitude;
   arquivo >> linhas >> colunas;
 
   for (int i = 0; i < linhas; i++) {
-    for (int j = 0; j<colunas; j++) {
+    for (int j = 0; j < colunas; j++) {
       arquivo >> altitude;
       CHECK(terreno.matriz[i][j] == altitude);
+    }
+  }
+}
+
+TEST_CASE("Criar matriz exemplo 9x9") {
+  Terreno terreno(3); // cria matriz 9x9
+
+  //inicializar cantos com mesma altura
+  terreno.matriz[0][0] = 10;
+  terreno.matriz[0][8] = 10;
+  terreno.matriz[8][0] = 10;
+  terreno.matriz[8][8] = 10;
+
+  //rugosidade zero
+  terreno.gerarTerreno(3, 0.0);
+
+  for (int i = 0; i < 9; i++) {
+    for (int j = 0; j < 9; j++) {
+      CHECK(terreno.matriz[i][j] == 10);
     }
   }
 }

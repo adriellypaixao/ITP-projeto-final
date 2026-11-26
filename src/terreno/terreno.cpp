@@ -161,7 +161,20 @@ bool Terreno::salvarTerreno(const std::string& nomeArquivo) const {
 }
 
 bool Terreno::lerTerreno(const std::string& nomeArquivo) {
-    // IMPLEMENTAR
-    return false;
+    std::ifstream arquivo(nomeArquivo);
+
+    int linhas, colunas, altitude;
+    arquivo >> linhas >> colunas;
+
+    if (!arquivo.is_open() || arquivo.fail()) return false;
+
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            arquivo >> altitude;
+            matriz[i][j] = altitude;
+        }
+    }
+    arquivo.close();
+    return true;
 }
 
