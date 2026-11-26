@@ -23,7 +23,7 @@ TEST_CASE("Testa os valores default = -1 em matriz 5x5") {
 
   for (int i = 0; i < 5; i++) {
     for (int j = 0; j<5; j++) {
-      CHECK(terreno.matriz[i][j] == -1);
+      CHECK(terreno.obterAltitude(i, j) == -1);
     }
   }
 }
@@ -43,7 +43,7 @@ TEST_CASE("Testa salvar matriz 5x5 em arquivo") {
   for (int i = 0; i < linhas; i++) {
     for (int j = 0; j<colunas; j++) {
       arquivo >> altitude;
-      CHECK(altitude == terreno.matriz[i][j]);
+      CHECK(altitude == terreno.obterAltitude(i, j));
     }
   }
 }
@@ -61,7 +61,7 @@ TEST_CASE("Testa ler terreno 3x3 em arquivo") {
   for (int i = 0; i < linhas; i++) {
     for (int j = 0; j < colunas; j++) {
       arquivo >> altitude;
-      CHECK(terreno.matriz[i][j] == altitude);
+      CHECK(terreno.obterAltitude(i, j) == altitude);
     }
   }
 }
@@ -70,17 +70,17 @@ TEST_CASE("Criar matriz exemplo 9x9") {
   Terreno terreno(3); // cria matriz 9x9
 
   //inicializar cantos com mesma altura
-  terreno.matriz[0][0] = 10;
-  terreno.matriz[0][8] = 10;
-  terreno.matriz[8][0] = 10;
-  terreno.matriz[8][8] = 10;
+  terreno.definirAltitude(0, 0, 10);
+  terreno.definirAltitude(0, 8, 10);
+  terreno.definirAltitude(8, 0, 10);
+  terreno.definirAltitude(8, 8, 10);
 
   //rugosidade zero
   terreno.gerarTerreno(3, 0.0);
 
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {
-      CHECK(terreno.matriz[i][j] == 10);
+      CHECK(terreno.obterAltitude(i, j) == 10);
     }
   }
 }

@@ -20,7 +20,7 @@ void Terreno::liberar(){
 }
 
 void Terreno::randomizarCantos() {
-    matriz[0][0] = (std::rand() % 101); // Gera um número aleatório entre 0 e 1000
+    matriz[0][0] = (std::rand() % 101); // Gera um número aleatório entre 0 e 100
     matriz[0][colunas-1] = (std::rand() % 101);
     matriz[linhas-1][0] = (std::rand() % 101);
     matriz[linhas-1][colunas-1] = (std::rand() % 101);
@@ -81,8 +81,6 @@ int Terreno::retornaMediaSquare(int i, int j, int distancia, float rugosidade) {
 
 void Terreno::square(int distancia, float rugosidade) {
     distancia /= 2;
-
-    if (distancia < 1) return;
     
     bool comecaDeslocado = true;
     for (int i = 0; i < linhas; i += distancia) {
@@ -123,7 +121,7 @@ Terreno::~Terreno() {
 }
 
 bool Terreno::gerarTerreno(int n, float rugosidade) {
-    if (n < 0 || rugosidade < 0.0) {
+    if (n <= 0 || rugosidade < 0.0) {
         return false;
     }
     if (pow(2, n) + 1 != linhas || pow(2, n) + 1 != colunas || matriz == nullptr) {
@@ -150,6 +148,10 @@ int Terreno::obterQtdColunas() const {
 
 int Terreno::obterQtdLinhas() const {
     return linhas;
+}
+
+void Terreno::definirAltitude(int linha, int coluna, int altitude) {
+    matriz[linha][coluna] = altitude;
 }
 
 bool Terreno::salvarTerreno(const std::string& nomeArquivo) const {
