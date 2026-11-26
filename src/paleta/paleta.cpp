@@ -63,7 +63,7 @@ void Paleta::adicionarCor(const Cor& cor) {
     }
 };
 
-Cor Paleta::obterCor(int indice) {
+Cor Paleta::obterCor(int indice) const {
     if (indice < 0 || indice >= quantidade) {
         return Cor{0, 0, 0};
     }

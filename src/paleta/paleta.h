@@ -63,7 +63,7 @@ public:
    * @return cor armazenada no índice especificado. Se o índice for inválido (menor que 0 ou
    * maior ou igual à quantidade de cores), retorna uma cor padrão (preto).
    */
-  Cor obterCor(int indice);
+  Cor obterCor(int indice) const;
   
   ~Paleta();
 };

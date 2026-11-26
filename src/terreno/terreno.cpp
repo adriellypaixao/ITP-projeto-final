@@ -1,4 +1,6 @@
 #include "terreno.h"
+#include "imagem.h"
+#include "paleta.h"
 #include <fstream>
 #include <cmath>
 #include <cstdlib>
@@ -20,14 +22,14 @@ void Terreno::liberar(){
 }
 
 void Terreno::randomizarCantos() {
-    matriz[0][0] = (std::rand() % 101); // Gera um número aleatório entre 0 e 100
-    matriz[0][colunas-1] = (std::rand() % 101);
-    matriz[linhas-1][0] = (std::rand() % 101);
-    matriz[linhas-1][colunas-1] = (std::rand() % 101);
+    matriz[0][0] = (std::rand() % 1001); // Gera um número aleatório entre 0 e 1000
+    matriz[0][colunas-1] = (std::rand() % 1001);
+    matriz[linhas-1][0] = (std::rand() % 1001);
+    matriz[linhas-1][colunas-1] = (std::rand() % 1001);
 }
 
 int Terreno::randomizarRugosidade(float rugosidade) {
-    return (std::rand() % 201 - 100) * rugosidade; // Gera um número entre -100 e 100 e multiplica pela rugosidade
+    return (std::rand() % 2001 - 1000) * rugosidade; // Gera um número entre -1000 e 1000 e multiplica pela rugosidade
 }
 
 void Terreno::diamondSquare(int distancia, float rugosidade) {
@@ -98,6 +100,29 @@ void Terreno::square(int distancia, float rugosidade) {
     }
 }
 
+int Terreno::maximoValor() const {
+    int max = matriz[0][0];
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            if (matriz[i][j] > max) {
+                max = matriz[i][j];
+            }
+        }
+    }
+    return max;
+}
+
+int Terreno::minimoValor() const {
+    int min = matriz[0][0];
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            if (matriz[i][j] < min) {
+                min = matriz[i][j];
+            }
+        }
+    }
+    return min;
+}
 
 Terreno::Terreno() {
     this->linhas = 0;
@@ -195,5 +220,47 @@ bool Terreno::lerTerreno(const std::string& nomeArquivo) {
     }
     arquivo.close();
     return true;
+}
+
+Imagem Terreno::gerarImagem(const Paleta& paleta, bool sombra) const {
+    Imagem imagem(colunas, linhas);
+
+    int max = maximoValor();
+    int min = minimoValor();
+    int quantidade = paleta.obterQuantidade();
+    float range = (float)(max - min) / quantidade;
+    if(range == 0) range = 1;
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            int altitude = matriz[i][j];
+            int indexCor = (altitude - min) / range;
+            if (indexCor >= quantidade) {
+                indexCor = quantidade - 1;
+            }
+            Cor cor = paleta.obterCor(indexCor);
+            Pixel pixel{cor.r, cor.g, cor.b};
+            imagem.definePixel(j, i, pixel);
+        }
+    }
+    if(sombra){
+        sombrear(imagem);
+    }
+    return imagem;
+}
+
+void Terreno::sombrear(Imagem& imagem) const {
+    for (int i=1; i<linhas; i++) {
+        for (int j=1; j<colunas; j++) {
+            int altitudeAtual = matriz[i][j];
+            int altitudeVizinho = matriz[i-1][j-1];
+            if (altitudeAtual < altitudeVizinho) {
+                Pixel pixel = imagem.obterPixel(j, i);
+                pixel.r *= 0.7;
+                pixel.g *= 0.7;
+                pixel.b *= 0.7;
+                imagem.definePixel(j, i, pixel);
+            }
+        }
+    }
 }
 

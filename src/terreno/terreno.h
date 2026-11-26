@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-
+#include "imagem.h"
+#include "paleta.h"
 class Terreno {
     private:
         int** matriz;
@@ -16,7 +17,9 @@ class Terreno {
         void diamond(int distancia, float rugosidade);
         int retornaMediaSquare(int i, int j, int distancia, float rugosidade);
         void square(int distancia, float rugosidade);
-
+        int maximoValor() const;
+        int minimoValor() const;
+        void sombrear(Imagem& imagem) const;
     public:
         Terreno();
         Terreno(int n);
@@ -27,5 +30,7 @@ class Terreno {
         int obterQtdLinhas() const; 
         void definirAltitude(int linha, int coluna, int altitude);
         bool salvarTerreno(const std::string& nomeArquivo) const;
-        bool lerTerreno(const std::string& nomeArquivo); //falta
+        bool lerTerreno(const std::string& nomeArquivo);
+        Imagem gerarImagem(const Paleta& paleta, bool sombra) const;
+
 };
