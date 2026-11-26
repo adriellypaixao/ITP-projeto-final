@@ -20,18 +20,22 @@ void Terreno::liberar(){
 }
 
 void Terreno::randomizarCantos() {
-    matriz[0][0] = (std::rand() % 101); // Gera um número aleatório entre 0 e 100
+    matriz[0][0] = (std::rand() % 101); // Gera um número aleatório entre 0 e 1000
     matriz[0][colunas-1] = (std::rand() % 101);
     matriz[linhas-1][0] = (std::rand() % 101);
     matriz[linhas-1][colunas-1] = (std::rand() % 101);
 }
 
-void Terreno::diamondSquare(int distancia) {
-    diamond(distancia);
-    square(distancia);
+int Terreno::randomizarRugosidade(float rugosidade) {
+    return (std::rand() % 101 - 50) * rugosidade; // Gera um número entre -50 e 50 e multiplica pela rugosidade
 }
 
-int Terreno::retornaMediaDiamond(int i, int j, int distancia) {
+void Terreno::diamondSquare(int distancia, float rugosidade) {
+    diamond(distancia, rugosidade);
+    square(distancia, rugosidade);
+}
+
+int Terreno::retornaMediaDiamond(int i, int j, int distancia, float rugosidade) {
     distancia/=2;
     
     int p1 = matriz[i-distancia][j-distancia];
@@ -40,22 +44,23 @@ int Terreno::retornaMediaDiamond(int i, int j, int distancia) {
     int p4 = matriz[i+distancia][j+distancia];
     
     int media = (p1 + p2 + p3 + p4) / 4;
-    
+    media+= randomizarRugosidade(rugosidade);
+    media = (media < 0) ? 0 : media;
     return media;
 }
 
-void Terreno::diamond(int distancia) {
+void Terreno::diamond(int distancia, float rugosidade) {
     int linha_atual = distancia/2;
     int coluna_atual = distancia/2;
 
     for (int i = linha_atual; i < linhas; i += distancia) {
         for (int j = coluna_atual; j < colunas; j += distancia) {
-            matriz[i][j] = retornaMediaDiamond(i, j, distancia);
+            matriz[i][j] = retornaMediaDiamond(i, j, distancia, rugosidade);
         }
     }
 }
  
-int Terreno::retornaMediaSquare(int i, int j, int distancia) {
+int Terreno::retornaMediaSquare(int i, int j, int distancia, float rugosidade) {
     int p1 = ((i - distancia) >= 0) ? matriz[i-distancia][j] : 0; // ponto de cima 
     int p2 = ((j - distancia) >= 0) ? matriz[i][j - distancia] : 0; // ponto da esquerda
     int p3 = ((j + distancia) < colunas) ? matriz[i][j + distancia] : 0; // ponto da direita
@@ -69,11 +74,12 @@ int Terreno::retornaMediaSquare(int i, int j, int distancia) {
     }
     
     int media = (p1 + p2 + p3 + p4) / qtd_pontos;
-    
+    media+= randomizarRugosidade(rugosidade);
+    media = (media < 0) ? 0 : media;
     return media;
 }
 
-void Terreno::square(int distancia) {
+void Terreno::square(int distancia, float rugosidade) {
     distancia /= 2;
 
     if (distancia < 1) return;
@@ -82,12 +88,12 @@ void Terreno::square(int distancia) {
     for (int i = 0; i < linhas; i += distancia) {
         if (comecaDeslocado) {
             for (int j = distancia; j < colunas; j+=(distancia*2)) {
-                matriz[i][j] = retornaMediaSquare(i, j, distancia);
+                matriz[i][j] = retornaMediaSquare(i, j, distancia, rugosidade);
             }
         }
         else { // começar a preencher pela coluna 0
             for (int j = 0; j < colunas; j+=(distancia*2)) {
-                matriz[i][j] = retornaMediaSquare(i, j, distancia);
+                matriz[i][j] = retornaMediaSquare(i, j, distancia, rugosidade);
             }
         }
         comecaDeslocado = (comecaDeslocado == true) ? false : true; // inverter valores: se tá true, troca pra false e vice-versa
@@ -120,11 +126,17 @@ bool Terreno::gerarTerreno(int n, float rugosidade) {
     if (n < 0 || rugosidade < 0.0) {
         return false;
     }
-    alocar(n);
-    randomizarCantos();
-    for (int distancia = pow(2, n); distancia >= 1; distancia /= 2) {
-        diamondSquare(distancia);
+    if (pow(2, n) + 1 != linhas || pow(2, n) + 1 != colunas || matriz == nullptr) {
+        liberar();
+        alocar(n);
     }
+    if(matriz[0][0] == -1 || matriz[0][colunas-1] == -1 || matriz[linhas-1][0] == -1 || matriz[linhas-1][colunas-1] == -1) {
+        randomizarCantos();
+    }
+    //randomizarCantos();
+    for (int distancia = pow(2, n); distancia > 1; distancia /= 2, rugosidade /= 2.0) {
+        diamondSquare(distancia, rugosidade);
+    }  
     return true;
 }
 

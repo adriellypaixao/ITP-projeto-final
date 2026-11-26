@@ -12,7 +12,6 @@ TEST_CASE("Testa a criação de um terreno de uma única célula") {
 
 TEST_CASE("Testa a Função de randomizar os cantos do terreno") {
   Terreno terreno(2);
-
   CHECK(terreno.gerarTerreno(2, 0.5) == true);
   CHECK(terreno.obterAltitude(0, 0) == 31);
 }

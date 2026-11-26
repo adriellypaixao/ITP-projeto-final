@@ -10,11 +10,12 @@ class Terreno {
         void alocar(int n);
         void liberar();
         void randomizarCantos();
-        void diamondSquare(int distancia);
-        int retornaMediaDiamond(int i, int j, int distancia);
-        void diamond(int distancia);
-        int retornaMediaSquare(int i, int j, int distancia);
-        void square(int distancia);
+        int randomizarRugosidade(float rugosidade);
+        void diamondSquare(int distancia, float rugosidade);
+        int retornaMediaDiamond(int i, int j, int distancia, float rugosidade);
+        void diamond(int distancia, float rugosidade);
+        int retornaMediaSquare(int i, int j, int distancia, float rugosidade);
+        void square(int distancia, float rugosidade);
 
     public:
         Terreno();
