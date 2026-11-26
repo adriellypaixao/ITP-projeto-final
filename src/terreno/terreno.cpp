@@ -27,7 +27,7 @@ void Terreno::randomizarCantos() {
 }
 
 int Terreno::randomizarRugosidade(float rugosidade) {
-    return (std::rand() % 101 - 50) * rugosidade; // Gera um número entre -50 e 50 e multiplica pela rugosidade
+    return (std::rand() % 201 - 100) * rugosidade; // Gera um número entre -100 e 100 e multiplica pela rugosidade
 }
 
 void Terreno::diamondSquare(int distancia, float rugosidade) {
@@ -127,6 +127,11 @@ bool Terreno::gerarTerreno(int n, float rugosidade) {
     if (pow(2, n) + 1 != linhas || pow(2, n) + 1 != colunas || matriz == nullptr) {
         liberar();
         alocar(n);
+        for (int i = 0; i < linhas; i++) {
+            for (int j = 0; j < colunas; j++) {
+                matriz[i][j] = -1;
+            }
+        }
     }
     if(matriz[0][0] == -1 || matriz[0][colunas-1] == -1 || matriz[linhas-1][0] == -1 || matriz[linhas-1][colunas-1] == -1) {
         randomizarCantos();
